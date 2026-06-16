@@ -25,6 +25,7 @@ async function main() {
     port,
     user,
     password,
+    charset: "utf8mb4",
     multipleStatements: true
   });
 

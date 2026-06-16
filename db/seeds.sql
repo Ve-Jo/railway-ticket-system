@@ -44,29 +44,29 @@ ON DUPLICATE KEY UPDATE
   is_active = VALUES(is_active);
 
 INSERT INTO stations (code, name, city, address, is_active)
-SELECT 'KYIV-PAS', 'РљРёРµРІ-РџР°СЃСЃР°Р¶РёСЂСЃРєРёР№', 'РљРёРµРІ', 'Р’РѕРєР·Р°Р»СЊРЅР°СЏ РїР»РѕС‰Р°РґСЊ, 1', 1
+SELECT 'KYIV-PAS', 'Київ-Пасажирський', 'Київ', 'Вокзальна площа, 1', 1
 WHERE NOT EXISTS (SELECT 1 FROM stations WHERE code = 'KYIV-PAS');
 
 INSERT INTO stations (code, name, city, address, is_active)
-SELECT 'VINN-TSN', 'Р’РёРЅРЅРёС†Р°', 'Р’РёРЅРЅРёС†Р°', 'РїР»РѕС‰Р°РґСЊ Р“РµСЂРѕРµРІ Р§РµСЂРЅРѕР±С‹Р»СЏ, 1', 1
+SELECT 'VINN-TSN', 'Вінниця', 'Вінниця', 'площа Героїв Чорнобиля, 1', 1
 WHERE NOT EXISTS (SELECT 1 FROM stations WHERE code = 'VINN-TSN');
 
 INSERT INTO stations (code, name, city, address, is_active)
-SELECT 'KHM-TSN', 'РҐРјРµР»СЊРЅРёС†РєРёР№', 'РҐРјРµР»СЊРЅРёС†РєРёР№', 'РџСЂРѕСЃРєСѓСЂРѕРІСЃРєР°СЏ, 10', 1
+SELECT 'KHM-TSN', 'Хмельницький', 'Хмельницький', 'Проскурівська, 10', 1
 WHERE NOT EXISTS (SELECT 1 FROM stations WHERE code = 'KHM-TSN');
 
 INSERT INTO stations (code, name, city, address, is_active)
-SELECT 'TERN-TSN', 'РўРµСЂРЅРѕРїРѕР»СЊ', 'РўРµСЂРЅРѕРїРѕР»СЊ', 'РїР»РѕС‰Р°РґСЊ РџРѕР±РµРґС‹, 1', 1
+SELECT 'TERN-TSN', 'Тернопіль', 'Тернопіль', 'площа Перемоги, 1', 1
 WHERE NOT EXISTS (SELECT 1 FROM stations WHERE code = 'TERN-TSN');
 
 INSERT INTO stations (code, name, city, address, is_active)
-SELECT 'LVIV-PAS', 'Р›СЊРІРѕРІ', 'Р›СЊРІРѕРІ', 'РїР»РѕС‰Р°РґСЊ Р”РІРѕСЂС†РѕРІР°СЏ, 1', 1
+SELECT 'LVIV-PAS', 'Львів', 'Львів', 'площа Двірцева, 1', 1
 WHERE NOT EXISTS (SELECT 1 FROM stations WHERE code = 'LVIV-PAS');
 
 INSERT INTO routes (code, name, origin_station_id, destination_station_id, is_active)
 SELECT
   'R-KYIV-LVIV',
-  'РљРёРµРІ - Р›СЊРІРѕРІ',
+  'Київ - Львів',
   s1.id,
   s2.id,
   1
@@ -79,7 +79,7 @@ WHERE s1.code = 'KYIV-PAS'
 INSERT INTO routes (code, name, origin_station_id, destination_station_id, is_active)
 SELECT
   'R-LVIV-KYIV',
-  'Р›СЊРІРѕРІ - РљРёРµРІ',
+  'Львів - Київ',
   s1.id,
   s2.id,
   1
@@ -260,7 +260,7 @@ WHERE r.code = 'R-LVIV-KYIV'
   );
 
 INSERT INTO trains (code, name, category, is_active)
-SELECT 'IC-701', 'РРЅС‚РµСЂСЃРёС‚Рё 701', 'Intercity', 1
+SELECT 'IC-701', 'Інтерсіті 701', 'Intercity', 1
 WHERE NOT EXISTS (SELECT 1 FROM trains WHERE code = 'IC-701');
 
 INSERT INTO carriages (train_id, carriage_number, carriage_type, class_code, seat_capacity, is_active)
