@@ -1,0 +1,48 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.default {
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+.reserved,
+.pending,
+.warning {
+  background: var(--color-warning-soft);
+  color: var(--color-warning-text);
+}
+
+.paid,
+.active,
+.confirmed,
+.success,
+.available {
+  background: var(--color-success-soft);
+  color: var(--color-success-text);
+}
+
+.refunded,
+.cancelled,
+.expired,
+.occupied,
+.error {
+  background: var(--color-error-soft);
+  color: var(--color-error-text);
+}
+
+.info {
+  background: var(--color-info-soft);
+  color: var(--color-info-text);
+}

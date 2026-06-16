@@ -1,0 +1,127 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+    border-color var(--transition-fast), color var(--transition-fast),
+    transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: var(--color-brand-blue);
+  color: var(--color-text-inverse);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--color-brand-blue-dark);
+}
+
+.secondary {
+  background: var(--color-bg);
+  border-color: var(--color-brand-blue);
+  color: var(--color-brand-blue);
+}
+
+.secondary:hover:not(:disabled) {
+  background: var(--color-brand-blue-soft);
+}
+
+.accent {
+  background: var(--color-accent-yellow);
+  color: var(--color-accent-yellow-text);
+}
+
+.accent:hover:not(:disabled) {
+  background: var(--color-accent-yellow-dark);
+}
+
+.outline {
+  background: transparent;
+  border-color: var(--color-brand-blue);
+  color: var(--color-brand-blue);
+}
+
+.outline:hover:not(:disabled) {
+  background: var(--color-brand-blue);
+  color: var(--color-text-inverse);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+.ghost:hover:not(:disabled) {
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+}
+
+.danger {
+  background: var(--color-error);
+  color: var(--color-text-inverse);
+}
+
+.danger:hover:not(:disabled) {
+  background: var(--color-error-text);
+}
+
+.sm {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-xs);
+}
+
+.md {
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--font-size-sm);
+}
+
+.lg {
+  padding: var(--space-4) var(--space-6);
+  font-size: var(--font-size-base);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.spinnerWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

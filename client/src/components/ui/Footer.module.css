@@ -1,0 +1,35 @@
+.footer {
+  margin-top: auto;
+  padding: 24px 40px;
+  border-top: 1px solid #d7dfeb;
+  background: #f7fbff;
+  color: #486581;
+  font-size: 14px;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  font-weight: 600;
+  color: #102a43;
+}
+
+.copy {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .footer {
+    padding: 20px;
+  }
+
+  .inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}

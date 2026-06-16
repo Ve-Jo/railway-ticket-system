@@ -1,0 +1,331 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-surface);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-height);
+  border-bottom: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+}
+
+.header :global(.container) {
+  height: 100%;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  gap: var(--space-4);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.brand:hover {
+  color: inherit;
+}
+
+.brandIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-yellow);
+  color: var(--color-accent-yellow-text);
+  line-height: 0;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brandTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.brandSubtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.burger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.burgerOpen span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.burgerOpen span:nth-child(2) {
+  opacity: 0;
+}
+
+.burgerOpen span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.link {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.link:hover {
+  color: var(--color-text);
+  background: var(--color-surface-alt);
+}
+
+.linkActive {
+  color: var(--color-text-inverse);
+  background: var(--color-brand-blue);
+}
+
+.linkActive:hover {
+  color: var(--color-text-inverse);
+  background: var(--color-brand-blue-dark);
+}
+
+.session {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.sessionHint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.sessionBox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-bg);
+}
+
+.sessionName {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sessionRole {
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--color-brand-blue-soft);
+  color: var(--color-brand-blue);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+}
+
+.authMenu {
+  position: relative;
+}
+
+.authToggle {
+  min-width: 152px;
+  justify-content: center;
+}
+
+.authDropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: min(320px, calc(100vw - 32px));
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-lg);
+}
+
+.authSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.authSectionTitle {
+  margin: 0 0 var(--space-1);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.authDivider {
+  height: 1px;
+  margin: var(--space-3) 0;
+  background: var(--color-border);
+}
+
+.authAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-align: left;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.authActionLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.authAction:hover:not(:disabled) {
+  background: var(--color-surface-alt);
+}
+
+.authAction:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.authActionMeta {
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  color: var(--color-brand-blue);
+}
+
+.main {
+  flex: 1 1 auto;
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-12);
+}
+
+@media (max-width: 900px) {
+  .burger {
+    display: flex;
+  }
+
+  .actions {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .actionsOpen {
+    display: flex;
+  }
+
+  .nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .link {
+    text-align: center;
+  }
+
+  .session {
+    justify-content: center;
+  }
+
+  .sessionBox {
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+  }
+
+  .authMenu {
+    width: 100%;
+  }
+
+  .authToggle {
+    width: 100%;
+  }
+
+  .authDropdown {
+    position: static;
+    width: 100%;
+    margin-top: var(--space-3);
+  }
+}

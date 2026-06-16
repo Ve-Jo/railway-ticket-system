@@ -1,0 +1,49 @@
+.form {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  align-items: end;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.submit {
+  min-width: 200px;
+}
+
+.note {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.hero {
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+}
+
+.hero .fields {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 768px) {
+  .hero .fields {
+    grid-template-columns: 1fr;
+  }
+
+  .submit {
+    width: 100%;
+  }
+}

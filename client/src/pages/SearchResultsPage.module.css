@@ -1,0 +1,30 @@
+.page {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-12) 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-lg);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.list {
+  display: grid;
+  gap: var(--space-5);
+}

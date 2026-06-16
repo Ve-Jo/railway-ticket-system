@@ -1,0 +1,54 @@
+.footer {
+  margin-top: auto;
+  padding: var(--space-6) 0;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.brandIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-yellow);
+  color: var(--color-accent-yellow-text);
+}
+
+.brandTitle {
+  color: var(--color-text);
+}
+
+.copy {
+  margin: 0;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .copy {
+    text-align: center;
+  }
+}

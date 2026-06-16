@@ -1,0 +1,59 @@
+.page {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.searchPanel {
+  max-width: 800px;
+}
+
+.searchCard {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.panelTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.searchForm {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.formActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.resultsSection {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.resultsTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.cardList {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (max-width: 640px) {
+  .formActions {
+    flex-direction: column;
+  }
+
+  .formActions button {
+    width: 100%;
+  }
+}
