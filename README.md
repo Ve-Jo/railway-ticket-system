@@ -92,7 +92,3 @@ npm run dev
 ```
 
 Перед запуском потрібно заповнити `.env` за зразком `.env.example`.
-
-## Примітка по Railway
-
-Для production-середовища важливо використовувати `utf8mb4` у MySQL і ініціалізувати БД через `db/schema.sql` та `db/seeds.sql`.
