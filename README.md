@@ -68,7 +68,7 @@ flowchart LR
     DB --> LOGS
 ```
 
-<img width="972" height="591" alt="{218AF589-A6AC-4CE7-B89B-AF4C81BC318E}" src="https://github.com/user-attachments/assets/656b449c-5982-4e6c-9bbc-2508d0881e9a" />
+<img width="1000" height="585" alt="{43BACA98-A591-46B0-9DC3-0A5DE7AC2BCD}" src="https://github.com/user-attachments/assets/c377b46c-0a88-41df-b19b-b6607b165de3" />
 
 ## Важливі файли проєкту
 
