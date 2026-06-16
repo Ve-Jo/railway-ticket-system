@@ -72,15 +72,15 @@ flowchart LR
 
 ### База даних
 
-- схема БД: [db/schema.sql](C:/Users/PAPA/Downloads/diploma/db/schema.sql)
-- тестові дані: [db/seeds.sql](C:/Users/PAPA/Downloads/diploma/db/seeds.sql)
-- SQL-перевірки сценаріїв: [db/smoke-checks.sql](C:/Users/PAPA/Downloads/diploma/db/smoke-checks.sql)
+- схема БД: [db/schema.sql](./db/schema.sql)
+- тестові дані: [db/seeds.sql](./db/seeds.sql)
+- SQL-перевірки сценаріїв: [db/smoke-checks.sql](./db/smoke-checks.sql)
 
 ### Документація
 
-- архітектура: [docs/architecture.md](C:/Users/PAPA/Downloads/diploma/docs/architecture.md)
-- контракти API: [docs/api-contracts.md](C:/Users/PAPA/Downloads/diploma/docs/api-contracts.md)
-- проєктування БД: [docs/database-design.md](C:/Users/PAPA/Downloads/diploma/docs/database-design.md)
+- архітектура: [docs/architecture.md](./docs/architecture.md)
+- контракти API: [docs/api-contracts.md](./docs/api-contracts.md)
+- проєктування БД: [docs/database-design.md](./docs/database-design.md)
 
 ## Локальний запуск
 
