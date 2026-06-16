@@ -1,135 +1,118 @@
-# MVP Status
+# Статус MVP
 
-## Purpose
+## Призначення
 
-This document tracks functional coverage of [TZ.md](C:/Users/PAPA/Downloads/diploma/TZ.md) against the current implementation and project docs. It is intended for two follow-up stages:
+Документ фіксує покриття функціональних вимог поточною реалізацією та допомагає зрозуміти, що вже стабільне, а що ще потребує доробки перед фінальним завершенням MVP.
 
-- finishing the remaining functional gaps before declaring MVP complete;
-- moving into the visual and UX pass with a clear understanding of what is already stable.
+## Легенда статусів
 
-## Status Legend
+- `done` - функціональність підтверджена кодом, API, схемою або ручними перевірками
+- `partial` - частково реалізовано або документовано, але ще не закрито повністю
+- `planned` - зафіксовано в документації, але не підтверджено в реалізації
 
-- `done` -> confirmed by implemented flow, route contract, schema, or manual-check doc
-- `partial` -> partly covered, documented, or expected from current flow, but not yet fully closed against the TЗ
-- `planned` -> fixed in TЗ/docs, but not confirmed as implemented yet
+## Матриця MVP
 
-## MVP Matrix
-
-| Area from TZ | Status | Notes |
+| Область | Статус | Примітка |
 | --- | --- | --- |
-| Registration, login, logout, session auth | `done` | Covered by auth flow and API contracts: `register/login/logout/me`, server-side `sessions/cookies`, client auth shell. |
-| Role separation: passenger, cashier, admin | `partial` | Roles and route protection exist; passenger flow is confirmed. Cashier/admin role-specific business flows are not fully closed. |
-| Search trips by departure, arrival, date | `done` | Confirmed in docs and client flow for stations, search results, and trip details. |
-| Show available trips | `done` | Search results include time, route, price, and available seats. |
-| Show carriages and seats for selected trip | `done` | Passenger seat-selection flow is implemented and documented. |
-| Recheck seat availability before booking/payment | `done` | Confirmed by DB design and booking/payment flow notes. |
-| Create booking | `done` | Booking creation exists for passenger flow and is covered by manual checks. |
-| Booking expiration window | `partial` | `reserved_until` and release rules are designed; expired reservations are handled on business actions, but background auto-expire is still called out as unfinished. |
-| Payment imitation | `done` | `POST /api/payments` is part of the implemented lifecycle and manual checks. |
-| Move booking to paid ticket | `done` | Payment flow issues a ticket and marks booking as paid. |
-| View active and archived tickets | `done` | Passenger dashboard uses `GET /api/tickets/my` for active/history scopes. |
-| Refund paid ticket | `done` | Refund flow and checks are documented as part of the implemented passenger cycle. |
-| Cashier can find booking and confirm sale | `partial` | Role and contracts are defined, but cashier service flow is still an open functional block. |
-| Admin can manage stations, routes, trains, carriages, trips, prices | `partial` | DB model and API contracts exist, but full CRUD closure should be treated as incomplete until admin API and UI flows are confirmed. |
-| Operation logging | `partial` | `operation_logs` is present in schema and manual checks mention it as optional if implemented; logging should not be considered fully closed yet. |
-| Prevent double booking / double sale | `done` | Centralized in `bookings` with unique active seat key and transaction-oriented flow. |
-| Store users, trips, bookings, tickets, payments, refunds in MySQL | `partial` | Schema, seeds, and flow design are present; final live verification on a real MySQL run is still required. |
+| Реєстрація, вхід, вихід, сесійна автентифікація | `done` | Покрито auth-потоком, API й клієнтською оболонкою. |
+| Розділення ролей: пасажир, касир, адміністратор | `partial` | Ролі та захист маршрутів існують, але службові сценарії ще не повністю закриті. |
+| Пошук рейсів за станцією відправлення, прибуття та датою | `done` | Підтверджено API і клієнтським потоком пошуку. |
+| Відображення доступних рейсів | `done` | Результати містять маршрут, час, ціну та кількість вільних місць. |
+| Перегляд вагонів і місць для обраного рейсу | `done` | Пасажирський сценарій вибору місця реалізований. |
+| Повторна перевірка доступності місця перед бронюванням та оплатою | `done` | Підтверджено моделлю БД і серверною логікою. |
+| Створення бронювання | `done` | Працює і покрите ручними перевірками. |
+| Сплив строку дії бронювання | `partial` | `reserved_until` закладено, але фонова обробка прострочення ще лишається окремою задачею. |
+| Імітація оплати | `done` | Потік `POST /api/payments` реалізований. |
+| Переведення бронювання в оплачений квиток | `done` | Успішна оплата створює квиток і переводить бронювання у `paid`. |
+| Перегляд активних і архівних квитків | `done` | Пасажирська панель використовує `GET /api/tickets/my`. |
+| Повернення оплаченого квитка | `done` | Базовий сценарій повернення працює. |
+| Касир може знайти бронювання та оформити продаж | `partial` | Права доступу є, але окремий завершений службовий сценарій ще треба зафіксувати. |
+| Адміністратор керує станціями, маршрутами, поїздами, вагонами, рейсами та цінами | `partial` | Частина CRUD уже є, але повне покриття треба підтвердити окремо. |
+| Журналювання операцій | `partial` | Таблиця є, але повну інтеграцію журналів ще треба вважати незавершеною. |
+| Захист від подвійного бронювання та подвійного продажу | `done` | Забезпечується унікальним активним ключем місця в `bookings`. |
+| Зберігання користувачів, рейсів, бронювань, квитків, оплат і повернень у MySQL | `done` | Схема, seed-дані й live-перевірка на Railway це підтверджують. |
 
-## Goals From TZ
+## Цілі проєкту
 
-| Goal | Status | Notes |
+| Ціль | Статус | Примітка |
 | --- | --- | --- |
-| Goal 1. Users and roles | `done` | Session auth and protected access are already part of the working foundation. |
-| Goal 2. Trip search and seat selection | `done` | Search, results, and seat-view flow are already covered. |
-| Goal 3. Booking | `partial` | Main booking flow works, but automatic expiration is not fully closed. |
-| Goal 4. Sale and payment imitation | `partial` | Passenger sale path is closed; cashier sale path still needs explicit closure. |
-| Goal 5. Refunds | `done` | Passenger refund lifecycle is functionally covered. |
-| Goal 6. Administrative section | `partial` | Data model and contracts exist; complete admin CRUD and service views still need confirmation. |
-| Goal 7. Data integrity | `partial` | Double-sale protection is designed and integrated, but operation logs and final integration verification remain. |
+| Користувачі та ролі | `done` | Сесії та базовий рольовий доступ працюють. |
+| Пошук рейсів і вибір місця | `done` | Реалізовано в пасажирському інтерфейсі. |
+| Бронювання | `partial` | Основний сценарій є, але життєвий цикл прострочення ще варто довести до кінця. |
+| Продаж і імітація оплати | `partial` | Пасажирський потік працює, службовий потік касира ще треба окремо завершити. |
+| Повернення | `done` | Базовий цикл повернення покритий. |
+| Адміністративна частина | `partial` | Модель даних і частина інтерфейсів є, але повне закриття ще потребує перевірки. |
+| Цілісність даних | `done` | Подвійний продаж блокується, а live-MySQL перевірка вже виконана. |
 
-## Role Coverage
+## Покриття ролей
 
-### Passenger
+### Пасажир
 
-Status: `done`
+Статус: `done`
 
-Confirmed flow:
+Підтверджений сценарій:
 
-1. Register or log in.
-2. Search trips by route and date.
-3. Open trip details and inspect seats.
-4. Reserve an available seat.
-5. Pay for the reservation.
-6. View active ticket.
-7. Refund paid ticket.
-8. See refunded ticket in history.
+1. Реєстрація або вхід.
+2. Пошук рейсів за маршрутом і датою.
+3. Відкриття деталей рейсу та перегляд місць.
+4. Бронювання доступного місця.
+5. Оплата бронювання.
+6. Перегляд активного квитка.
+7. Повернення оплаченого квитка.
+8. Перегляд історії.
 
-### Cashier
+### Касир
 
-Status: `partial`
+Статус: `partial`
 
-Expected by TЗ:
+Очікувано:
 
-- search trips and seats;
-- find passenger bookings;
-- confirm payment or perform sale;
-- perform refund.
+- пошук рейсів і місць;
+- пошук бронювань пасажира;
+- підтвердження оплати або оформлення продажу;
+- оформлення повернення.
 
-Current assessment:
+Поточний висновок:
 
-- role exists in auth/domain model;
-- API contracts allow cashier access in booking/payment/refund scenarios;
-- full cashier workflow should still be treated as not fully demonstrated until dedicated service screens and end-to-end checks are confirmed.
+- роль і правила доступу існують;
+- API допускає касира до потрібних сценаріїв;
+- повний end-to-end сценарій ще треба формально закрити.
 
-### Admin
+### Адміністратор
 
-Status: `partial`
+Статус: `partial`
 
-Expected by TЗ:
+Очікувано:
 
-- manage stations, routes, trains, carriages, seats, trips, and prices;
-- review service lists and operation logs.
+- керування станціями, маршрутами, поїздами, вагонами, місцями, рейсами та цінами;
+- перегляд службових списків і журналів операцій.
 
-Current assessment:
+Поточний висновок:
 
-- data model is prepared;
-- admin-related contracts are documented;
-- full CRUD completion and operator-facing admin workflow should still be treated as open.
+- модель даних готова;
+- частина адміністративного API й UI уже є;
+- повне завершення CRUD-сценаріїв ще слід окремо підтвердити.
 
-## Confirmed Supporting Artifacts
+## Підтверджувальні артефакти
 
-- DB schema: [db/schema.sql](C:/Users/PAPA/Downloads/diploma/db/schema.sql)
-- DB design notes: [database-design.md](C:/Users/PAPA/Downloads/diploma/docs/database-design.md)
-- Demo seed data: [demo-data.md](C:/Users/PAPA/Downloads/diploma/docs/demo-data.md)
-- API surface: [api-contracts.md](C:/Users/PAPA/Downloads/diploma/docs/api-contracts.md)
-- Manual lifecycle checks: [manual-checks.md](C:/Users/PAPA/Downloads/diploma/docs/manual-checks.md)
+- схема БД: [db/schema.sql](C:/Users/PAPA/Downloads/diploma/db/schema.sql)
+- опис БД: [docs/database-design.md](C:/Users/PAPA/Downloads/diploma/docs/database-design.md)
+- демо-дані: [docs/demo-data.md](C:/Users/PAPA/Downloads/diploma/docs/demo-data.md)
+- контракти API: [docs/api-contracts.md](C:/Users/PAPA/Downloads/diploma/docs/api-contracts.md)
+- ручні перевірки: [docs/manual-checks.md](C:/Users/PAPA/Downloads/diploma/docs/manual-checks.md)
 
-## Remaining Functional Work Before Final MVP Closure
+## Що ще лишається перед повним закриттям MVP
 
-1. Close the cashier workflow as a demonstrated end-to-end scenario, not only as role rules and API expectations.
-2. Close admin CRUD for stations, routes, trains, carriages, seats, trips, and prices.
-3. Confirm service lists for bookings, tickets, and refunds.
-4. Finish operation logging and make it part of the standard manual verification flow.
-5. Add or confirm background expiration for stale bookings if this remains a project requirement beyond lazy cleanup on business actions.
-6. Run the full manual checklist on a live MySQL database and record the outcome.
+1. Формально закрити повний сценарій касира.
+2. Довести адміністративний CRUD до повністю підтвердженого стану.
+3. Завершити або підтвердити журналювання операцій.
+4. Зафіксувати остаточну політику авто-експірації бронювань.
 
-## What Is Ready For The Visual Stage
+## Підсумок
 
-These parts are already suitable for layout, UX, and visual refinement once the remaining functional work is either completed or consciously deferred:
+- пасажирський MVP-цикл: `ready`
+- сценарій касира: `needs closure`
+- сценарій адміністратора: `needs closure`
+- аудит дій: `needs closure`
 
-- auth screens and navigation shell;
-- trip search screen;
-- search results screen;
-- seat selection screen;
-- booking and payment screen;
-- passenger dashboard with active/history tickets and refund action.
-
-## Final Readiness Summary
-
-- Passenger MVP lifecycle: `ready`
-- Cashier flow: `needs closure`
-- Admin flow: `needs closure`
-- Audit/logging: `needs closure`
-- Final integration verification: `needs closure`
-
-At the current stage, the project looks functionally close to MVP, but it should not yet be marked as fully complete against the TЗ until cashier, admin, logging, and live end-to-end verification are explicitly closed.
+Отже, пасажирська частина системи вже придатна для демонстрації, а службові ролі ще потребують формального добору та остаточної перевірки.

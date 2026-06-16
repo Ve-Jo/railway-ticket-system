@@ -1,101 +1,101 @@
-# API Contracts
+# Контракти API
 
-## Notes
+## Загальні примітки
 
-- Base prefix: `/api`
-- Format: `application/json`
-- Auth: server-side session via cookie
-- Roles: `passenger`, `cashier`, `admin`
-- Common error shape:
+- базовий префікс: `/api`
+- формат відповіді: `application/json`
+- автентифікація: серверна сесія через cookie
+- ролі: `passenger`, `cashier`, `admin`
+- базова форма помилки:
 
 ```json
 {
-  "message": "Human-readable error message"
+  "message": "Зрозуміле повідомлення про помилку"
 }
 ```
 
-- Main statuses:
-  - `401` -> no active session
-  - `403` -> role is not allowed
-  - `404` -> entity not found
-  - `409` -> state conflict, duplicate booking, invalid transition
-  - `422` -> validation error
+Основні статуси:
+
+- `401` - немає активної сесії
+- `403` - роль не має доступу
+- `404` - сутність не знайдена
+- `409` - конфлікт стану, дубль бронювання або некоректний перехід
+- `422` - помилка валідації
 
 ## Auth
 
 ### `POST /api/auth/register`
 
-- Auth: public
-- Request:
+- доступ: публічний
+- запит:
 
 ```json
 {
-  "fullName": "Ivan Petrov",
+  "fullName": "Іван Петренко",
   "email": "ivan@example.com",
-  "login": "ivanpetrov",
+  "login": "ivanpetrenko",
   "password": "secret123"
 }
 ```
 
-- Responses:
-  - `201` -> created user and active session
-  - `409` -> login or email already exists
-  - `422` -> invalid payload
+- відповіді:
+  - `201` - користувача створено, сесія відкрита
+  - `409` - логін або email уже існує
+  - `422` - невалідні дані
 
 ### `POST /api/auth/login`
 
-- Auth: public
-- Request:
+- доступ: публічний
+- запит:
 
 ```json
 {
-  "login": "ivanpetrov",
+  "login": "ivanpetrenko",
   "password": "secret123"
 }
 ```
 
-- Responses:
-  - `200` -> active session created
-  - `401` -> invalid credentials
-  - `422` -> invalid payload
+- відповіді:
+  - `200` - сесію створено
+  - `401` - неправильні облікові дані
+  - `422` - невалідні дані
 
 ### `POST /api/auth/logout`
 
-- Auth: any authenticated user
-- Request: empty body
-- Responses:
-  - `204` -> session destroyed
-  - `401` -> no active session
+- доступ: будь-який авторизований користувач
+- тіло запиту: порожнє
+- відповіді:
+  - `204` - сесію завершено
+  - `401` - активної сесії немає
 
 ### `GET /api/auth/me`
 
-- Auth: any authenticated user
-- Request: none
-- Responses:
+- доступ: будь-який авторизований користувач
+- відповіді:
   - `200`
 
 ```json
 {
   "user": {
     "id": 1,
-    "fullName": "Ivan Petrov",
+    "fullName": "Іван Петренко",
     "email": "ivan@example.com",
-    "login": "ivanpetrov",
+    "login": "ivanpetrenko",
     "role": "passenger"
   }
 }
 ```
 
-  - `401` -> no active session
+  - `401` - немає активної сесії
 
 ## Stations
 
 ### `GET /api/stations`
 
-- Auth: public
-- Query:
-  - `search` optional string for station name/code filtering
-- Responses:
+- доступ: публічний
+- query:
+  - `search` - необов'язковий рядок для фільтрації за назвою або кодом
+- відповіді:
   - `200`
 
 ```json
@@ -103,8 +103,8 @@
   "items": [
     {
       "id": 1,
-      "name": "Kyiv-Pasazhyrskyi",
-      "code": "KYI"
+      "name": "Київ-Пасажирський",
+      "code": "KYIV-PAS"
     }
   ]
 }
@@ -114,12 +114,12 @@
 
 ### `GET /api/trips/search`
 
-- Auth: public
-- Query:
-  - `fromStationId` required number
-  - `toStationId` required number
-  - `date` required string `YYYY-MM-DD`
-- Responses:
+- доступ: публічний
+- query:
+  - `fromStationId` - обов'язкове число
+  - `toStationId` - обов'язкове число
+  - `date` - обов'язковий рядок у форматі `YYYY-MM-DD`
+- відповіді:
   - `200`
 
 ```json
@@ -128,25 +128,24 @@
     {
       "id": 12,
       "routeCode": "IC-101",
-      "trainName": "Intercity 101",
-      "departureStation": "Kyiv-Pasazhyrskyi",
-      "arrivalStation": "Lviv",
+      "trainName": "Інтерсіті 101",
+      "departureStation": "Київ-Пасажирський",
+      "arrivalStation": "Львів",
       "departureAt": "2026-06-20T08:00:00Z",
       "arrivalAt": "2026-06-20T13:20:00Z",
-      "basePrice": 650.00,
+      "basePrice": 650.0,
       "availableSeats": 42
     }
   ]
 }
 ```
 
-  - `422` -> missing or invalid query params
+  - `422` - відсутні або невалідні параметри
 
 ### `GET /api/trips/:tripId`
 
-- Auth: public
-- Request: path param `tripId`
-- Responses:
+- доступ: публічний
+- відповіді:
   - `200`
 
 ```json
@@ -154,10 +153,10 @@
   "trip": {
     "id": 12,
     "routeCode": "IC-101",
-    "trainName": "Intercity 101",
+    "trainName": "Інтерсіті 101",
     "departureAt": "2026-06-20T08:00:00Z",
     "arrivalAt": "2026-06-20T13:20:00Z",
-    "basePrice": 650.00
+    "basePrice": 650.0
   },
   "carriages": [
     {
@@ -169,11 +168,6 @@
           "id": 41,
           "number": "1",
           "status": "available"
-        },
-        {
-          "id": 42,
-          "number": "2",
-          "status": "reserved"
         }
       ]
     }
@@ -181,14 +175,14 @@
 }
 ```
 
-  - `404` -> trip not found
+  - `404` - рейс не знайдено
 
 ## Bookings
 
 ### `POST /api/bookings`
 
-- Auth: `passenger`, `cashier`
-- Request:
+- доступ: `passenger`, `cashier`
+- запит:
 
 ```json
 {
@@ -199,10 +193,10 @@
 }
 ```
 
-- Notes:
-  - `passengerUserId` is optional for `passenger` and must match current user
-  - `cashier` may create booking for another passenger
-- Responses:
+- примітки:
+  - `passengerUserId` необов'язковий для `passenger` і має відповідати поточному користувачу
+  - `cashier` може створити бронювання для іншого пасажира
+- відповіді:
   - `201`
 
 ```json
@@ -215,53 +209,53 @@
     "carriageId": 3,
     "seatId": 41,
     "userId": 7,
-    "price": 650.00
+    "price": 650.0
   }
 }
 ```
 
-  - `404` -> trip, carriage, seat, or passenger not found
-  - `409` -> seat already reserved or paid
-  - `422` -> invalid payload
+  - `404` - рейс, вагон, місце або пасажир не знайдені
+  - `409` - місце вже заброньоване або продане
+  - `422` - невалідні дані
 
 ### `GET /api/bookings/:bookingId`
 
-- Auth: booking owner, `cashier`, `admin`
-- Responses:
-  - `200` -> booking details
-  - `403` -> passenger cannot access another user's booking
-  - `404` -> booking not found
+- доступ: власник бронювання, `cashier`, `admin`
+- відповіді:
+  - `200` - деталі бронювання
+  - `403` - пасажир намагається відкрити чуже бронювання
+  - `404` - бронювання не знайдено
 
 ### `POST /api/bookings/:bookingId/cancel`
 
-- Auth: booking owner, `cashier`
-- Request: empty body
-- Responses:
-  - `200` -> booking status changed to `cancelled`
-  - `403` -> not allowed
-  - `404` -> booking not found
-  - `409` -> booking already paid, cancelled, expired, or refunded
+- доступ: власник бронювання, `cashier`
+- тіло запиту: порожнє
+- відповіді:
+  - `200` - бронювання переведено у `cancelled`
+  - `403` - операція заборонена
+  - `404` - бронювання не знайдено
+  - `409` - бронювання вже оплачено, скасовано, прострочено або повернено
 
 ## Payments
 
 ### `POST /api/payments`
 
-- Auth: `passenger`, `cashier`
-- Request:
+- доступ: `passenger`, `cashier`
+- запит:
 
 ```json
 {
   "bookingId": 55,
   "method": "mock",
-  "amount": 650.00
+  "amount": 650.0
 }
 ```
 
-- Notes:
-  - `passenger` may pay only own active booking
-  - `cashier` may confirm payment for any valid booking
-  - successful payment must atomically move booking `reserved -> paid` and issue ticket
-- Responses:
+- примітки:
+  - `passenger` може оплатити лише власне активне бронювання
+  - `cashier` може підтвердити оплату для будь-якого валідного бронювання
+  - успішна оплата має атомарно перевести бронювання `reserved -> paid` і створити квиток
+- відповіді:
   - `201`
 
 ```json
@@ -270,7 +264,7 @@
     "id": 80,
     "status": "completed",
     "bookingId": 55,
-    "amount": 650.00,
+    "amount": 650.0,
     "method": "mock",
     "paidAt": "2026-06-20T07:05:00Z"
   },
@@ -282,18 +276,18 @@
 }
 ```
 
-  - `404` -> booking not found
-  - `409` -> booking expired, cancelled, already paid, or amount mismatch
-  - `422` -> invalid payload
+  - `404` - бронювання не знайдено
+  - `409` - бронювання прострочене, скасоване, уже оплачене або сума не збігається
+  - `422` - невалідні дані
 
 ## Tickets
 
 ### `GET /api/tickets/my`
 
-- Auth: `passenger`
-- Query:
-  - `scope` optional: `active` or `history`
-- Responses:
+- доступ: `passenger`
+- query:
+  - `scope` - необов'язково: `active` або `history`
+- відповіді:
   - `200`
 
 ```json
@@ -315,30 +309,30 @@
 
 ### `GET /api/tickets/:ticketId`
 
-- Auth: ticket owner, `cashier`, `admin`
-- Responses:
-  - `200` -> ticket details
-  - `403` -> not allowed
-  - `404` -> ticket not found
+- доступ: власник квитка, `cashier`, `admin`
+- відповіді:
+  - `200` - деталі квитка
+  - `403` - доступ заборонено
+  - `404` - квиток не знайдено
 
 ## Refunds
 
 ### `POST /api/refunds`
 
-- Auth: ticket owner, `cashier`
-- Request:
+- доступ: власник квитка, `cashier`
+- запит:
 
 ```json
 {
   "ticketId": 23,
-  "reason": "Trip cancelled by passenger"
+  "reason": "Скасування поїздки пасажиром"
 }
 ```
 
-- Notes:
-  - only `paid/issued` ticket before trip departure
-  - successful refund must atomically mark booking and ticket as refunded
-- Responses:
+- примітки:
+  - лише для квитка у стані `paid/issued` до відправлення рейсу
+  - успішне повернення має атомарно оновити бронювання та квиток
+- відповіді:
   - `201`
 
 ```json
@@ -352,72 +346,64 @@
 }
 ```
 
-  - `404` -> ticket not found
-  - `409` -> ticket already refunded or trip already started
-  - `422` -> invalid payload
+  - `404` - квиток не знайдено
+  - `409` - квиток уже повернено або рейс уже розпочався
+  - `422` - невалідні дані
 
-## Admin Basics
+## Адміністративні сценарії
 
 ### `GET /api/admin/users`
 
-- Auth: `admin`
-- Query:
-  - `role` optional
-  - `search` optional
-- Responses:
-  - `200` -> users list
+- доступ: `admin`
+- query:
+  - `role` - необов'язково
+  - `search` - необов'язково
+- відповіді:
+  - `200` - список користувачів
 
 ### `GET /api/admin/bookings`
 
-- Auth: `admin`, `cashier`
-- Query:
-  - `status` optional
-  - `tripId` optional
-  - `userId` optional
-- Responses:
-  - `200` -> bookings list
+- доступ: `admin`, `cashier`
+- query:
+  - `status` - необов'язково
+  - `tripId` - необов'язково
+  - `userId` - необов'язково
+- відповіді:
+  - `200` - список бронювань
 
 ### `GET /api/admin/tickets`
 
-- Auth: `admin`, `cashier`
-- Query:
-  - `status` optional
-  - `tripId` optional
-  - `userId` optional
-- Responses:
-  - `200` -> tickets list
+- доступ: `admin`, `cashier`
+- відповіді:
+  - `200` - список квитків
 
 ### `GET /api/admin/refunds`
 
-- Auth: `admin`, `cashier`
-- Query:
-  - `status` optional
-  - `tripId` optional
-  - `userId` optional
-- Responses:
-  - `200` -> refunds list
+- доступ: `admin`, `cashier`
+- відповіді:
+  - `200` - список повернень
 
 ### `POST /api/admin/stations`
 
-- Auth: `admin`
-- Request:
+- доступ: `admin`
+- запит:
 
 ```json
 {
-  "name": "Dnipro",
+  "name": "Дніпро",
   "code": "DNP"
 }
 ```
 
-- Responses:
-  - `201` -> station created
-  - `409` -> duplicate code
-  - `422` -> invalid payload
+- відповіді:
+  - `201` - станцію створено
+  - `409` - дубль коду
+  - `422` - невалідні дані
 
 ### `POST /api/admin/trips`
 
-- Auth: `admin`
-- Request:
+- доступ: `admin`
+- запит:
 
 ```json
 {
@@ -425,21 +411,21 @@
   "trainId": 4,
   "departureAt": "2026-06-20T08:00:00Z",
   "arrivalAt": "2026-06-20T13:20:00Z",
-  "basePrice": 650.00
+  "basePrice": 650.0
 }
 ```
 
-- Responses:
-  - `201` -> trip created
-  - `404` -> route or train not found
-  - `422` -> invalid payload
+- відповіді:
+  - `201` - рейс створено
+  - `404` - маршрут або поїзд не знайдено
+  - `422` - невалідні дані
 
 ### `PATCH /api/admin/trips/:tripId`
 
-- Auth: `admin`
-- Request: partial trip fields
-- Responses:
-  - `200` -> trip updated
-  - `404` -> trip not found
-  - `409` -> invalid state change
-  - `422` -> invalid payload
+- доступ: `admin`
+- запит: часткові поля рейсу
+- відповіді:
+  - `200` - рейс оновлено
+  - `404` - рейс не знайдено
+  - `409` - некоректний перехід стану
+  - `422` - невалідні дані
