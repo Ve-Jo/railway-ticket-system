@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-06-17T00:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="use-cases" name="Варіанти використання">
+    <mxGraphModel dx="2200" dy="1600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="2" value="Діаграма варіантів використання системи" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fontStyle=1;fillColor=#1F3A5F;fontColor=#FFFFFF;strokeColor=#1F3A5F;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="260" y="20" width="1860" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="3" value="Інформаційна система автоматизації бронювання, продажу та повернення залізничних квитків" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#D9EAD3;strokeColor=#6AA84F;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="120" width="1720" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="4" value="Публічні сценарії" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#EAF3FF;strokeColor=#4A86E8;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="300" y="230" width="520" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="Пошук рейсів" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#4A86E8;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="340" y="290" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="6" value="Перегляд рейсу і місць" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#4A86E8;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="570" y="290" width="210" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="7" value="Авторизація&#10;(вхід / реєстрація)" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#4A86E8;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="405" y="390" width="270" height="78" as="geometry" />
+        </mxCell>
+
+        <mxCell id="8" value="Сценарії пасажира" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#FFF2CC;strokeColor=#D6B656;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="300" y="500" width="520" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="9" value="Вибір місця" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#D6B656;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="340" y="560" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="10" value="Створення бронювання" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#D6B656;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="570" y="560" width="210" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="11" value="Скасування бронювання" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#D6B656;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="340" y="660" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="12" value="Оплата бронювання" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#D6B656;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="570" y="660" width="210" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="13" value="Перегляд активних квитків" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#D6B656;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="760" width="190" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="14" value="Перегляд історії поїздок" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#D6B656;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="560" y="760" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="15" value="Повернення квитка" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#D6B656;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="440" y="860" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="16" value="Сценарії касира" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#DFF2E1;strokeColor=#3D8B40;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="880" y="230" width="620" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="17" value="Пошук броні / квитка" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D8B40;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="930" y="290" width="190" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="18" value="Оформлення продажу" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D8B40;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="290" width="190" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="19" value="Підтвердження оплати" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D8B40;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="930" y="390" width="190" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="20" value="Оформлення повернення" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D8B40;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="390" width="190" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="21" value="Сценарії адміністратора" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#F7D9E8;strokeColor=#C05A8B;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="880" y="510" width="1000" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="22" value="Керування станціями" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#C05A8B;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="930" y="570" width="190" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="23" value="Керування маршрутами" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#C05A8B;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="570" width="190" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="24" value="Керування рейсами" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#C05A8B;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1390" y="570" width="190" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="25" value="Керування рухомим складом" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#C05A8B;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="570" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="26" value="Керування користувачами" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#C05A8B;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="680" width="210" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="27" value="Перегляд журналу операцій" style="shape=ellipse;whiteSpace=wrap;html=1;fontSize=13;fillColor=#FFFFFF;strokeColor=#C05A8B;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="680" width="220" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="28" value="Гість" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=14;fontStyle=1;strokeColor=#4A86E8;" vertex="1" parent="1">
+          <mxGeometry x="70" y="260" width="90" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="29" value="Пасажир" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=14;fontStyle=1;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="70" y="560" width="90" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="30" value="Касир" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=14;fontStyle=1;strokeColor=#3D8B40;" vertex="1" parent="1">
+          <mxGeometry x="2140" y="260" width="90" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="31" value="Адміністратор" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=14;fontStyle=1;strokeColor=#C05A8B;" vertex="1" parent="1">
+          <mxGeometry x="2140" y="600" width="120" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="40" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="28" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="41" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="28" target="6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="42" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="28" target="7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="43" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="29" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="44" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="29" target="6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="45" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="29" target="9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="46" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="29" target="10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="47" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="29" target="11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="48" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="29" target="12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="49" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="29" target="13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="50" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="29" target="14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="51" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="29" target="15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="52" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="30" target="17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="53" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="30" target="18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="54" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="30" target="19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="55" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="30" target="20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="56" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="31" target="22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="57" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="31" target="23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="31" target="24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="59" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="31" target="25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="60" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="31" target="26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="61" value="" style="endArrow=none;html=1;strokeWidth=1.8;strokeColor=#666666;" edge="1" parent="1" source="31" target="27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="62" value="Пасажир отримує доступ до приватних сценаріїв після входу" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fillColor=#F4F4F4;strokeColor=#AAAAAA;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="700" y="930" width="460" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

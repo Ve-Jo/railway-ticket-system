@@ -1,0 +1,100 @@
+<mxfile host="app.diagrams.net" agent="Codex">
+  <diagram id="database-conceptual" name="Концептуальна схема БД">
+    <mxGraphModel dx="2113" dy="1802" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="1700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#4A86E8;" value="Роль&#xa;code, name" vertex="1">
+          <mxGeometry height="86" width="160" x="125" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#4A86E8;" value="Користувач&#xa;username, email, full_name, is_active" vertex="1">
+          <mxGeometry height="106" width="260" x="335" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#4A86E8;" value="Журнал операцій&#xa;action, result_status, details" vertex="1">
+          <mxGeometry height="96" width="260" x="335" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#D6B656;" value="Станція&#xa;code, name, city" vertex="1">
+          <mxGeometry height="86" width="180" x="1220" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#D6B656;" value="Маршрут&#xa;code, name" vertex="1">
+          <mxGeometry height="86" width="180" x="680" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#D6B656;" value="Зупинка маршруту&#xa;stop_order, offsets" vertex="1">
+          <mxGeometry height="108" width="220" x="930" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#3D8B40;" value="Потяг&#xa;code, name, category" vertex="1">
+          <mxGeometry height="86" width="180" x="680" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#3D8B40;" value="Вагон&#xa;carriage_number, carriage_type, class_code" vertex="1">
+          <mxGeometry height="86" width="240" x="910" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#3D8B40;" value="Місце&#xa;seat_number, seat_type, class_code" vertex="1">
+          <mxGeometry height="86" width="220" x="1200" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#C05A8B;" value="Рейс&#xa;trip_code, departure_datetime, arrival_datetime, status" vertex="1">
+          <mxGeometry height="108" width="250" x="645" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#C05A8B;" value="Бронювання&#xa;booking_number, status, reserved_until, paid_at, total_price&#xa;active_trip_seat_key" vertex="1">
+          <mxGeometry height="130" width="320" x="970" y="239" as="geometry" />
+        </mxCell>
+        <mxCell id="18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#C05A8B;" value="Квиток&#xa;ticket_number, ticket_status, issued_at, refunded_at" vertex="1">
+          <mxGeometry height="108" width="250" x="1350" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#C05A8B;" value="Платіж&#xa;payment_reference, method, status, amount, paid_at" vertex="1">
+          <mxGeometry height="108" width="250" x="830" y="536" as="geometry" />
+        </mxCell>
+        <mxCell id="20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fillColor=#FFFFFF;strokeColor=#C05A8B;" value="Повернення&#xa;refund_reference, status, amount, refunded_at" vertex="1">
+          <mxGeometry height="108" width="270" x="1160" y="428" as="geometry" />
+        </mxCell>
+        <mxCell id="40" edge="1" parent="1" source="4" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#4A86E8;fontSize=18;" target="5" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="41" edge="1" parent="1" source="5" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#4A86E8;fontSize=18;" target="6" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="42" edge="1" parent="1" source="8" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#D6B656;fontSize=18;" target="10" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="43" edge="1" parent="1" source="9" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#D6B656;fontSize=18;" target="10" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="44" edge="1" parent="1" source="12" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#3D8B40;fontSize=18;" target="13" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="45" edge="1" parent="1" source="13" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#3D8B40;fontSize=18;" target="14" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="46" edge="1" parent="1" source="9" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#C05A8B;fontSize=18;" target="16" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="47" edge="1" parent="1" source="12" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#C05A8B;fontSize=18;" target="16" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="48" edge="1" parent="1" source="16" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#C05A8B;fontSize=18;" target="17" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="49" edge="1" parent="1" source="17" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#C05A8B;fontSize=18;" target="19" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="50" edge="1" parent="1" source="17" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#C05A8B;fontSize=18;" target="18" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="51" edge="1" parent="1" source="18" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#C05A8B;fontSize=18;" target="20" value="0..1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="52" edge="1" parent="1" source="17" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#C05A8B;fontSize=18;" target="20" value="0..1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="53" edge="1" parent="1" source="5" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#4A86E8;fontSize=18;" target="17" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="54" edge="1" parent="1" source="5" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#4A86E8;fontSize=18;" target="19" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="55" edge="1" parent="1" source="5" style="endArrow=block;html=1;strokeWidth=2;strokeColor=#4A86E8;fontSize=18;" target="20" value="1..*">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
