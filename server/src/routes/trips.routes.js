@@ -92,10 +92,12 @@ router.get("/search", async (req, res, next) => {
     );
 
     const now = new Date();
-    const normalizedItems = items.map((item) => ({
-      ...item,
-      ...getTripAvailability(item, now)
-    }));
+    const normalizedItems = items
+      .map((item) => ({
+        ...item,
+        ...getTripAvailability(item, now)
+      }))
+      .sort(compareTripsForSearch);
 
     return res.json({ items: normalizedItems });
   } catch (error) {
@@ -223,5 +225,47 @@ router.get("/:tripId", async (req, res, next) => {
     return next(error);
   }
 });
+
+function compareTripsForSearch(left, right) {
+  const leftRank = getTripSearchRank(left);
+  const rightRank = getTripSearchRank(right);
+
+  if (leftRank !== rightRank) {
+    return leftRank - rightRank;
+  }
+
+  const leftDeparture = new Date(left.departureAt).getTime();
+  const rightDeparture = new Date(right.departureAt).getTime();
+  const leftTime = Number.isNaN(leftDeparture) ? 0 : leftDeparture;
+  const rightTime = Number.isNaN(rightDeparture) ? 0 : rightDeparture;
+
+  if (leftRank <= 1) {
+    return leftTime - rightTime;
+  }
+
+  return rightTime - leftTime;
+}
+
+function getTripSearchRank(trip) {
+  const availableSeats = Number(trip.availableSeats ?? 0);
+
+  if (trip.isBookable && availableSeats > 0) {
+    return 0;
+  }
+
+  if (trip.isBookable) {
+    return 1;
+  }
+
+  if (trip.availabilityStatus === "departed") {
+    return 2;
+  }
+
+  if (trip.availabilityStatus === "cancelled") {
+    return 3;
+  }
+
+  return 4;
+}
 
 export default router;

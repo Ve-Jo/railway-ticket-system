@@ -60,8 +60,25 @@ export async function ensureUpcomingTrips() {
         latest.arrival_datetime AS arrivalAt,
         latest.base_price AS basePrice,
         latest.sale_start_at AS saleStartAt,
-        latest.sale_end_at AS saleEndAt
+        latest.sale_end_at AS saleEndAt,
+        trains.category AS trainCategory,
+        origin_station.city AS originCity,
+        destination_station.city AS destinationCity,
+        route_metrics.distanceKm AS routeDistanceKm,
+        route_metrics.stopCount AS routeStopCount
       FROM trips AS latest
+      INNER JOIN routes ON routes.id = latest.route_id
+      INNER JOIN trains ON trains.id = latest.train_id
+      INNER JOIN stations AS origin_station ON origin_station.id = routes.origin_station_id
+      INNER JOIN stations AS destination_station ON destination_station.id = routes.destination_station_id
+      LEFT JOIN (
+        SELECT
+          route_id,
+          MAX(distance_from_origin_km) AS distanceKm,
+          COUNT(*) AS stopCount
+        FROM route_stations
+        GROUP BY route_id
+      ) AS route_metrics ON route_metrics.route_id = latest.route_id
       INNER JOIN (
         SELECT route_id, train_id, MAX(departure_datetime) AS latestDepartureAt
         FROM trips
@@ -133,6 +150,7 @@ async function ensureUpcomingTripsForTemplate(template) {
   }
 
   const tripDurationMs = templateArrival.getTime() - templateDeparture.getTime();
+  const fallbackDurationMinutes = Math.max(45, Math.round(tripDurationMs / 60000));
   const saleStartLeadMs = templateSaleStart
     ? templateDeparture.getTime() - templateSaleStart.getTime()
     : null;
@@ -169,7 +187,8 @@ async function ensureUpcomingTripsForTemplate(template) {
 
   if (!hasBookableTripToday(existingDepartures, now)) {
     const candidateDepartureToday = buildCatchupDeparture(now, templateDeparture);
-    const candidateArrivalToday = new Date(candidateDepartureToday.getTime() + tripDurationMs);
+    const todayPlan = buildGeneratedTripPlan(template, candidateDepartureToday, fallbackDurationMinutes);
+    const candidateArrivalToday = addMinutes(candidateDepartureToday, todayPlan.durationMinutes);
     const candidateSaleStartToday = saleStartLeadMs === null
       ? null
       : new Date(candidateDepartureToday.getTime() - saleStartLeadMs);
@@ -183,7 +202,7 @@ async function ensureUpcomingTripsForTemplate(template) {
       sourceTripCode: template.tripCode,
       candidateDeparture: candidateDepartureToday,
       candidateArrival: candidateArrivalToday,
-      basePrice: template.basePrice,
+      basePrice: todayPlan.basePrice,
       candidateSaleStart: candidateSaleStartToday,
       candidateSaleEnd: candidateSaleEndToday
     });
@@ -197,7 +216,8 @@ async function ensureUpcomingTripsForTemplate(template) {
     const dayKey = formatDate(candidateDeparture);
 
     if (dayKey !== todayKey && !existingKeys.has(dayKey)) {
-      const candidateArrival = new Date(candidateDeparture.getTime() + tripDurationMs);
+      const tripPlan = buildGeneratedTripPlan(template, candidateDeparture, fallbackDurationMinutes);
+      const candidateArrival = addMinutes(candidateDeparture, tripPlan.durationMinutes);
       const candidateSaleStart = saleStartLeadMs === null
         ? null
         : new Date(candidateDeparture.getTime() - saleStartLeadMs);
@@ -211,7 +231,7 @@ async function ensureUpcomingTripsForTemplate(template) {
         sourceTripCode: template.tripCode,
         candidateDeparture,
         candidateArrival,
-        basePrice: template.basePrice,
+        basePrice: tripPlan.basePrice,
         candidateSaleStart,
         candidateSaleEnd
       });
@@ -636,6 +656,231 @@ function buildGeneratedTripCode(sourceTripCode, departureAt) {
   return `${baseCode}-${datePart}-${timePart}`;
 }
 
+function buildGeneratedTripPlan(template, candidateDeparture, fallbackDurationMinutes) {
+  const durationMinutes = computeRouteDurationMinutes({
+    distanceKm: template.routeDistanceKm,
+    stopCount: template.routeStopCount,
+    trainCategory: template.trainCategory,
+    originCity: template.originCity,
+    destinationCity: template.destinationCity,
+    candidateDeparture,
+    fallbackDurationMinutes
+  });
+
+  const basePrice = computeRouteBasePrice({
+    distanceKm: template.routeDistanceKm,
+    stopCount: template.routeStopCount,
+    trainCategory: template.trainCategory,
+    originCity: template.originCity,
+    destinationCity: template.destinationCity,
+    candidateDeparture,
+    durationMinutes,
+    fallbackBasePrice: Number(template.basePrice)
+  });
+
+  return {
+    durationMinutes,
+    basePrice
+  };
+}
+
+function computeRouteDurationMinutes({
+  distanceKm,
+  stopCount,
+  trainCategory,
+  originCity,
+  destinationCity,
+  candidateDeparture,
+  fallbackDurationMinutes
+}) {
+  const fallback = Number.isFinite(fallbackDurationMinutes) && fallbackDurationMinutes > 0
+    ? fallbackDurationMinutes
+    : 240;
+  const normalizedDistance = Number(distanceKm);
+
+  if (!Number.isFinite(normalizedDistance) || normalizedDistance <= 0) {
+    return roundToStep(fallback, 5);
+  }
+
+  const averageSpeedKph = getTrainCategorySpeed(trainCategory);
+  const corridorSeed = buildCorridorSeed(originCity, destinationCity, trainCategory, candidateDeparture);
+  const corridorFactor = 0.94 + (hashToUnit(`${corridorSeed}:duration`) * 0.18);
+  const departureFactor = computeDepartureDurationFactor(candidateDeparture);
+  const intermediateStops = Math.max(0, Number(stopCount ?? 0) - 2);
+  const stopPenaltyMinutes = intermediateStops * (averageSpeedKph >= 85 ? 6 : 8);
+  const turnaroundBufferMinutes = normalizedDistance >= 450 ? 22 : normalizedDistance >= 250 ? 16 : 10;
+  const computedMinutes =
+    ((normalizedDistance / averageSpeedKph) * 60 * corridorFactor * departureFactor) +
+    stopPenaltyMinutes +
+    turnaroundBufferMinutes;
+  const blendedMinutes = (computedMinutes * 0.72) + (fallback * 0.28);
+
+  return roundToStep(Math.max(45, blendedMinutes), 5);
+}
+
+function computeRouteBasePrice({
+  distanceKm,
+  stopCount,
+  trainCategory,
+  originCity,
+  destinationCity,
+  candidateDeparture,
+  durationMinutes,
+  fallbackBasePrice
+}) {
+  const fallback = Number.isFinite(fallbackBasePrice) && fallbackBasePrice > 0
+    ? fallbackBasePrice
+    : 250;
+  const normalizedDistance = Number(distanceKm);
+  const averageSpeedKph = getTrainCategorySpeed(trainCategory);
+  const effectiveDistance = Number.isFinite(normalizedDistance) && normalizedDistance > 0
+    ? normalizedDistance
+    : Math.max(60, (durationMinutes / 60) * averageSpeedKph * 0.82);
+  const corridorSeed = buildCorridorSeed(originCity, destinationCity, trainCategory, candidateDeparture);
+  const cityDemandFactor = computeCityDemandFactor(originCity, destinationCity);
+  const departureFactor = computeDeparturePriceFactor(candidateDeparture);
+  const priceNoise = 0.93 + (hashToUnit(`${corridorSeed}:price`) * 0.16);
+  const intermediateStops = Math.max(0, Number(stopCount ?? 0) - 2);
+  const stopSurcharge = intermediateStops * 6;
+  const computedBasePrice =
+    (effectiveDistance * getTrainCategoryRatePerKm(trainCategory) * cityDemandFactor * departureFactor * priceNoise) +
+    stopSurcharge;
+  const blendedBasePrice = (computedBasePrice * 0.68) + (fallback * 0.32);
+
+  return roundToStep(Math.max(80, blendedBasePrice), 10);
+}
+
+function getTrainCategorySpeed(category) {
+  const normalized = normalizeDescriptor(category);
+
+  if (normalized.includes("intercity") || normalized.includes("express") || normalized.includes("ic")) {
+    return 92;
+  }
+
+  if (normalized.includes("night") || normalized.includes("sleeper") || normalized.includes("ніч")) {
+    return 68;
+  }
+
+  if (normalized.includes("regional") || normalized.includes("регіон")) {
+    return 58;
+  }
+
+  if (normalized.includes("fast") || normalized.includes("швид")) {
+    return 78;
+  }
+
+  return 72;
+}
+
+function getTrainCategoryRatePerKm(category) {
+  const normalized = normalizeDescriptor(category);
+
+  if (normalized.includes("intercity") || normalized.includes("express") || normalized.includes("ic")) {
+    return 1.12;
+  }
+
+  if (normalized.includes("night") || normalized.includes("sleeper") || normalized.includes("ніч")) {
+    return 0.9;
+  }
+
+  if (normalized.includes("regional") || normalized.includes("регіон")) {
+    return 0.72;
+  }
+
+  if (normalized.includes("fast") || normalized.includes("швид")) {
+    return 0.98;
+  }
+
+  return 0.88;
+}
+
+function computeCityDemandFactor(originCity, destinationCity) {
+  const originWeight = getCityWeight(originCity);
+  const destinationWeight = getCityWeight(destinationCity);
+  const corridorNoise = 0.97 + (hashToUnit(`${normalizeDescriptor(originCity)}:${normalizeDescriptor(destinationCity)}:demand`) * 0.12);
+
+  return clamp((((originWeight + destinationWeight) / 2) * corridorNoise), 0.92, 1.28);
+}
+
+function getCityWeight(city) {
+  const normalized = normalizeDescriptor(city);
+
+  if (normalized.includes("київ") || normalized.includes("kyiv")) {
+    return 1.16;
+  }
+
+  if (
+    normalized.includes("львів") ||
+    normalized.includes("lviv") ||
+    normalized.includes("одеса") ||
+    normalized.includes("odesa") ||
+    normalized.includes("харків") ||
+    normalized.includes("kharkiv") ||
+    normalized.includes("дніпро") ||
+    normalized.includes("dnipro")
+  ) {
+    return 1.11;
+  }
+
+  if (
+    normalized.includes("вінниц") ||
+    normalized.includes("vinnyts") ||
+    normalized.includes("терноп") ||
+    normalized.includes("ternop") ||
+    normalized.includes("хмельниц") ||
+    normalized.includes("khmel")
+  ) {
+    return 1.05;
+  }
+
+  return 1 + (hashToUnit(`${normalized}:city-weight`) * 0.04);
+}
+
+function computeDepartureDurationFactor(candidateDeparture) {
+  const departure = new Date(candidateDeparture);
+  const day = departure.getDay();
+  const hour = departure.getHours();
+
+  if (hour < 6 || hour >= 22) {
+    return day === 5 || day === 6 ? 1.08 : 1.05;
+  }
+
+  if ((hour >= 7 && hour <= 10) || (hour >= 17 && hour <= 20)) {
+    return 0.98;
+  }
+
+  return 1;
+}
+
+function computeDeparturePriceFactor(candidateDeparture) {
+  const departure = new Date(candidateDeparture);
+  const day = departure.getDay();
+  const hour = departure.getHours();
+
+  let factor = 1;
+
+  if (day === 5 || day === 0) {
+    factor += 0.06;
+  }
+
+  if ((hour >= 7 && hour <= 10) || (hour >= 17 && hour <= 21)) {
+    factor += 0.04;
+  } else if (hour < 6 || hour >= 22) {
+    factor -= 0.03;
+  }
+
+  return clamp(factor, 0.92, 1.15);
+}
+
+function buildCorridorSeed(originCity, destinationCity, trainCategory, candidateDeparture) {
+  return [
+    normalizeDescriptor(originCity),
+    normalizeDescriptor(destinationCity),
+    normalizeDescriptor(trainCategory),
+    formatDate(candidateDeparture)
+  ].join(":");
+}
+
 function alignCandidateDeparture(templateDeparture, now) {
   const candidate = new Date(templateDeparture);
   while (candidate <= now) {
@@ -708,6 +953,21 @@ function hashToUnit(value) {
   }
 
   return Math.abs(hash % 1000) / 1000;
+}
+
+function normalizeDescriptor(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+}
+
+function roundToStep(value, step) {
+  if (!Number.isFinite(value)) {
+    return step;
+  }
+
+  return Math.round(value / step) * step;
 }
 
 function clamp(value, min, max) {
