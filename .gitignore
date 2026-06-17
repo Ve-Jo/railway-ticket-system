@@ -1,5 +1,6 @@
 node_modules
 dist
+diploma_docs
 .railway
 .agents
 .vite
